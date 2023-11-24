@@ -35,6 +35,21 @@
     color: var(--background-color);
     border: var(--secondary-color);
 }
+#collapse-button {
+    background-color: blueviolet; /* Change as needed */
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-top-left-radius: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 70%; /* Adjust as needed */
+    right: 0; /* Adjust as needed */
+    width: 30%; /* Or your desired width */
+    height: 30%; /* Ensure this is the same as width for a square */
+    margin: 0; /* Reset any margins */
+    padding: 0; /* Adjust padding as needed */
+}
 #activation-button:hover {
     background-color: var(--secondary-color);
     color: var(--background-color);
