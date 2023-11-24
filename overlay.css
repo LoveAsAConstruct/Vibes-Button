@@ -35,21 +35,6 @@
     color: var(--background-color);
     border: var(--secondary-color);
 }
-#collapse-button {
-    background-color: blueviolet; /* Change as needed */
-    border: none;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-top-left-radius: 100%;
-    overflow: hidden;
-    position: absolute;
-    top: 70%; /* Adjust as needed */
-    right: 0; /* Adjust as needed */
-    width: 30%; /* Or your desired width */
-    height: 30%; /* Ensure this is the same as width for a square */
-    margin: 0; /* Reset any margins */
-    padding: 0; /* Adjust padding as needed */
-}
 #activation-button:hover {
     background-color: var(--secondary-color);
     color: var(--background-color);
@@ -61,4 +46,43 @@
     border-color: var(--secondary-color);
     border-width: 5px;
     /*box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.5);*/
+}
+#collapse-button {
+    background-color: blueviolet; /* Change as needed */
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-top-left-radius: 100%;
+    border-bottom-right-radius: 50%;
+    overflow: hidden;
+    position: absolute;
+    pointer-events: all;
+    bottom: 0; /* Adjust as needed */
+    right: 0; /* Adjust as needed */
+    width: 30%; /* Or your desired width */
+    height: 30%; /* Ensure this is the same as width for a square */
+    margin: 0; /* Reset any margins */
+    padding: 0; /* Adjust padding as needed */
+}
+#collapse-button:hover {
+    background-color: purple; /* Change as needed */
+}
+#collapse-button:active {
+    background-color: black; /* Change as needed */
+}
+#expand-button {
+    background-color: var(--primary-color);
+    pointer-events: all;
+    width: auto;
+    height: auto;
+    border-width: 0px !important;
+    border-bottom-right-radius: 100%;
+}
+#expand-button:active {
+    background-color: var(--secondary-color);
+    pointer-events: all;
+    border-width: 0px !important;
+    width: auto;
+    height: auto;
+    border-bottom-right-radius: 100%;
 }
