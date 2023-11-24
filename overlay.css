@@ -1,0 +1,49 @@
+:root {
+    --primary-color: #ff4500; /* Example primary color */
+    --secondary-color: #333; /* Example secondary color */
+    --background-color: #f3f3f3; /* Example background color */
+}
+#myOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000; /* Ensure it's above other content */
+    pointer-events: none;
+  }
+#button-container  {
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    top:0;
+    left: 0;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    background-color: var(--background-color);
+    border-bottom-right-radius: 10px;
+    pointer-events: all;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+#activation-button {
+    margin: auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    border: var(--secondary-color);
+}
+#activation-button:hover {
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+    border: var(--secondary-color);
+}
+#activation-button:active {
+    background-color: var(--background-color);
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    border-width: 5px;
+    /*box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.5);*/
+}
