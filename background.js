@@ -14,7 +14,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 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'  // Replace with your actual API key
+                  'Authorization': 'Bearer ' +result.openaiApiKey  // Replace with your actual API key
               },
               body: JSON.stringify({
                   prompt: "You are a supportive assistant interpreting inputs as positive sayings. Input: '" +request.url +"'",   // Update this with your actual prompt
