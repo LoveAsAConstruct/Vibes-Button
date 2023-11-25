@@ -10,14 +10,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       // Retrieve the API key from storage
       chrome.storage.sync.get(['openaiApiKey'], function(result) {
           if (result.openaiApiKey) {
-            fetch('https://api.openai.com/v1/engines/babbage/completions', {
+            fetch('https://api.openai.com/v1/engines/ft:babbage-002:personal::8Oq8nTwn/completions', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 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'  // Replace with your actual API key
+                  'Authorization': 'Bearer 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'  // Replace with your actual API key
               },
               body: JSON.stringify({
-                  prompt: "You are a supportive assistant who takes whatever input given to them and interprets said input (whether it be URLs or text) as a single sentence, positive, supportive, happy-go-lucky, joyous, saying, not unlike a fortune cookie. Input:  " +request.url,   // Update this with your actual prompt
+                  prompt: "You are a supportive assistant interpreting inputs as positive sayings. Input: '" +request.url +"'",   // Update this with your actual prompt
                   max_tokens: 125,
                   temperature: 0.7,
                   // Add any other parameters you might need

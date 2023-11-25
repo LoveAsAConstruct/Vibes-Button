@@ -7,7 +7,7 @@ import os
 load_dotenv()
 
 def query_openai(prompt):
-    api_key = os.getenv('OPENAI_API_KEY')  # Get API key from .env file
+    api_key = os.getenv('OPENAI_API_KEY2')  # Get API key from .env file
     if not api_key:
         raise ValueError("No OpenAI API key found in .env file")
 
@@ -23,7 +23,7 @@ def query_openai(prompt):
     }
 
     response = requests.post(
-        'https://api.openai.com/v1/engines/davinci/completions',
+        'https://api.openai.com/v1/engines/ft:babbage-002:personal::8Oq8nTwn/completions',
         headers=headers,
         data=json.dumps(data)
     )
@@ -35,7 +35,7 @@ def query_openai(prompt):
 
 # Example usage
 try:
-    prompt_text = "Translate the following English text to French: 'Hello, how are you?'"
+    prompt_text = "You are a supportive assistant interpreting inputs as positive sayings. Input: 'https://platform.openai.com/api-keys'"
     response = query_openai(prompt_text)
     print("AI Response:", response['choices'][0]['text'].strip())
 except Exception as e:

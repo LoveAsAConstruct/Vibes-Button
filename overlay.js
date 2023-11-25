@@ -71,7 +71,7 @@ fetch(chrome.runtime.getURL('overlay.html'))
                 if (response.reply) {
                     // Use the reply from the background script
                     console.log(response);
-                    textBox.textContent = response.reply;
+                    textBox.textContent = response.reply.split("'")[1];
                 } else if (response.error) {
                     // Handle any error sent from the background script
                     console.error('Error from background script:', response.error);
