@@ -3,37 +3,22 @@
 <head>
     <link rel="stylesheet" type="text/css" href="overlay.css">
     <script>
-        console.log("Script loaded");
-
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log("Content loaded");
-            var collapseButton = document.getElementById('collapse-button');
-
-            if (collapseButton) {
-                collapseButton.addEventListener('click', function() {
-                    console.log("Button clicked");
-                    var container = document.getElementById('button-container'); // Corrected way to get the container
-
-                    // Toggle visibility
-                    if (container.style.display === 'none') {
-                        container.style.display = 'block';
-                    } else {
-                        container.style.display = 'none';
-                    }
-                });
-            } else {
-                console.log("Collapse button not found");
-            }
-        });
+        console.log('Current URL:', window.location.href);
     </script>
 </head>
 <body>
     <div id="myOverlay">
-        <div id = "button-container">
-            <button id="activation-button">:)</button>
-            <button id="collapse-button"><</button>
+        <div id="flex-container">
+            <div id = "button-container">
+                <button id="activation-button">:)</button>
+                <button id="collapse-button"><</button>
+            </div>
+            <div id="text-box">
+                <!-- Text content goes here -->
+                Example text here...
+            </div>
+            <button id="expand-button" style="display: block;">></button>
         </div>
-        <button id="expand-button" style="display: block;">></button>
     </div>
 </body>
 </html>

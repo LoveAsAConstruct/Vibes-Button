@@ -71,6 +71,7 @@
     background-color: black; /* Change as needed */
 }
 #expand-button {
+    display: none;
     background-color: var(--primary-color);
     pointer-events: all;
     width: auto;
@@ -85,4 +86,24 @@
     width: auto;
     height: auto;
     border-bottom-right-radius: 100%;
+}
+#text-box {
+    right: 100px;
+    background-color: var(--background-color);
+    display: inline-block;  /* Or 'block' depending on your layout */
+    padding: 10px;     
+    margin-left: 70px;    /* Adjust padding as needed */
+    border-bottom-right-radius: 10px;
+    /* Other styling as needed */
+    /* Position it to the right of popup content */
+}
+#flex-container {
+    display: flex;          /* Enable Flexbox */
+    justify-content: flex-start; /* Align items to the start */
+    align-items: flex-start; /* Align items to the top, if necessary */
+}
+@media (max-width: 600px) { /* Adjust the breakpoint as needed */
+    #flex-container {
+        flex-direction: column;
+    }
 }
