@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       // Retrieve the API key from storage
       chrome.storage.sync.get(['openaiApiKey'], function(result) {
           if (result.openaiApiKey) {
-            fetch('https://api.openai.com/v1/engines/ft:babbage-002:personal::8Oq8nTwn/completions', {
+            fetch('https://api.openai.com/v1/engines/ft:babbage-002:personal::8PKhWeDd/completions', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
               body: JSON.stringify({
                   prompt: "You are a supportive assistant interpreting inputs as positive sayings. Input: '" +request.url +"'",   // Update this with your actual prompt
                   max_tokens: 125,
-                  temperature: 0.7,
+                  temperature: 1,
                   // Add any other parameters you might need
               })
             })
