@@ -5,7 +5,6 @@ link.href = chrome.runtime.getURL('overlay.css');
 link.type = 'text/css';
 link.rel = 'stylesheet';
 document.head.appendChild(link);
-
 console.log("Script loaded");
 console.log('Current URL:', window.location.href); // Get current page URL
 var url;
@@ -17,6 +16,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         // ...
     }
 });
+
+
 
 fetch(chrome.runtime.getURL('overlay.html'))
   .then(response => response.text())
@@ -31,6 +32,23 @@ fetch(chrome.runtime.getURL('overlay.html'))
     var popupContent = document.getElementById('button-container');
     var activationButton = document.getElementById('activation-button');
     var textBox = document.getElementById('text-box');
+    function revealText(text, object) {
+        let index = 0;
+        const interval = 10; // Interval between revealing each character (in milliseconds)
+    
+        function revealCharacter() {
+            if (index < text.length) {
+                object.textContent += text[index];
+                index++;
+                setTimeout(revealCharacter, interval);
+            }
+        }
+    
+        revealCharacter();
+    }
+    textBox.addEventListener('click', function() {
+        textBox.innerText='';
+    });
     collapseButton.addEventListener('click', function() {
         popupContent.style.display = 'none';
         textBox.style.display = 'none';  // Hide the text box
@@ -73,7 +91,8 @@ fetch(chrome.runtime.getURL('overlay.html'))
                     console.log(response);
                     response_chunks = response.reply.split(/\[\[(.*?)\]\]/).filter(Boolean);
                     response_chunks.sort((a, b) => b.length - a.length);
-                    textBox.textContent = response_chunks[0];
+                    textBox.innerText = '';
+                    revealText(response_chunks[0], textBox);
                 } else if (response.error) {
                     // Handle any error sent from the background script
                     console.error('Error from background script:', response.error);
