@@ -1,7 +1,7 @@
 :root {
-    --primary-color: #ff4500; /* Example primary color */
-    --secondary-color: #333; /* Example secondary color */
-    --background-color: #f3f3f3; /* Example background color */
+    --primary-color: #ff4500; /* primary color */
+    --secondary-color: #333; /* secondary color */
+    --background-color: #f3f3f3; /* background color */
 }
  /* Style for the popup container */
  .popup {
@@ -13,7 +13,34 @@
     border-radius: 5px;
     display: block; /* Initially hide the popup */
 }
-
+#api-key {
+    margin-top: 5px;
+    background-color: var(--background-color);
+    color: var(--secondary-color);
+    border: none;
+    padding: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-wrap: pretty;
+    width: 90%;
+    border-radius: 10px;
+}
+button  {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    border: none;
+    padding: 5px;
+    width: auto;
+    border-radius: 10px;
+}
+button:hover{
+    background-color: var(--background-color);
+    color: var(--secondary-color);
+}
+button:active{
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+}
 /* Style for the popup content */
 .popup-content {
     display: flex;
@@ -29,7 +56,8 @@
 #text-box {
     max-width: 50%;
     flex-grow: 1; /* Allow the text box to grow and take available space */
-    white-space: wrap; /* Prevent text from wrapping */
+    white-space: wrap;
+    text-wrap: pretty;
     overflow: hidden;
     text-align: right;
     text-overflow: ellipsis; /* Show ellipsis (...) for long text */
