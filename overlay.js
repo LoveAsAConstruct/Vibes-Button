@@ -71,7 +71,7 @@ fetch(chrome.runtime.getURL('overlay.html'))
                 if (response.reply) {
                     // Use the reply from the background script
                     console.log(response);
-                    response_chunks = response.reply.split("'");
+                    response_chunks = response.reply.split(/\[\[(.*?)\]\]/).filter(Boolean);
                     response_chunks.sort((a, b) => b.length - a.length);
                     textBox.textContent = response_chunks[0];
                 } else if (response.error) {
