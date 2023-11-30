@@ -63,10 +63,10 @@ fetch(chrome.runtime.getURL('overlay.html'))
     activationButton.addEventListener('click', function() {
         // Get the current URL
         var currentUrl = window.location.href;
-    
+        
         // Find the text box element
         var textBox = document.getElementById('text-box');
-    
+        
         // Set the text box content to the current URL
         if (textBox) {
             console.log("url set")
@@ -74,6 +74,7 @@ fetch(chrome.runtime.getURL('overlay.html'))
         } else {
             console.error('Text box element not found');
         }
+        myButton.classList.add('loading');
         chrome.runtime.sendMessage({
             contentScriptQuery: "queryChatGPT",
             url: currentUrl
@@ -86,6 +87,7 @@ fetch(chrome.runtime.getURL('overlay.html'))
         
             // Check for response and any errors
             if (response) {
+                myButton.classList.remove('loading');
                 if (response.reply) {
                     // Use the reply from the background script
                     console.log(response);
@@ -99,6 +101,7 @@ fetch(chrome.runtime.getURL('overlay.html'))
                     textBox.textContent = 'Error: ' + response.error;
                 }
             } else {
+                myButton.classList.remove('loading');
                 // Handle the case where response is undefined
                 console.error('No response received from background script');
                 textBox.textContent = 'No response received';

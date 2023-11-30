@@ -25,7 +25,7 @@
     width: 90%;
     border-radius: 10px;
 }
-button  {
+#extension-options button  {
     background-color: var(--primary-color);
     color: var(--background-color);
     border: none;
@@ -33,14 +33,15 @@ button  {
     width: auto;
     border-radius: 10px;
 }
-button:hover{
+#extension-options button:hover{
     background-color: var(--background-color);
     color: var(--secondary-color);
 }
-button:active{
+#extension-options button:active{
     background-color: var(--secondary-color);
     color: var(--background-color);
 }
+
 /* Style for the popup content */
 .popup-content {
     display: flex;
@@ -95,4 +96,45 @@ button:active{
     font-weight: bold;
     background-color: var(--secondary-color);
     box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.2); /* Updated box-shadow properties */
+}
+
+/* Loading state styles */
+.activation-button.loading {
+    background-color: var(--secondary-color);
+    position: relative;
+    overflow: hidden;
+  }
+
+.activation-button.loading::after {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(255, 255, 255, 0.8); /* Background overlay */
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 1;
+}
+
+.activation-button.loading::before {
+content: "";
+border: 4px solid #007bff;
+border-top: 4px solid transparent;
+border-radius: 50%;
+width: 20px;
+height: 20px;
+animation: spin 1s linear infinite; /* Loading spinner animation */
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+z-index: 2;
+}
+
+@keyframes spin {
+0% { transform: translate(-50%, -50%) rotate(0deg); }
+100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
