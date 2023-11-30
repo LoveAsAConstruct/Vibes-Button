@@ -17,7 +17,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 });
 
-
+function removeSpecialCharacters(inputString) {
+    // Define a regular expression to match special characters
+    const specialCharRegex = /[^a-zA-Z0-9\s.,?!'"():;]/g;
+  
+    // Use the replace() method to remove special characters
+    const cleanedString = inputString.replace(specialCharRegex, '');
+  
+    return cleanedString;
+  }
 
 fetch(chrome.runtime.getURL('overlay.html'))
   .then(response => response.text())
@@ -74,7 +82,7 @@ fetch(chrome.runtime.getURL('overlay.html'))
         } else {
             console.error('Text box element not found');
         }
-        myButton.classList.add('loading');
+        activationButton.classList.add('loading');
         chrome.runtime.sendMessage({
             contentScriptQuery: "queryChatGPT",
             url: currentUrl
@@ -87,14 +95,14 @@ fetch(chrome.runtime.getURL('overlay.html'))
         
             // Check for response and any errors
             if (response) {
-                myButton.classList.remove('loading');
+                activationButton.classList.remove('loading');
                 if (response.reply) {
                     // Use the reply from the background script
                     console.log(response);
                     response_chunks = response.reply.split(/\[\[(.*?)\]\]/).filter(Boolean);
                     response_chunks.sort((a, b) => b.length - a.length);
                     textBox.innerText = '';
-                    revealText(response_chunks[0], textBox);
+                    revealText(removeSpecialCharacters(response_chunks[0]), textBox);
                 } else if (response.error) {
                     // Handle any error sent from the background script
                     console.error('Error from background script:', response.error);

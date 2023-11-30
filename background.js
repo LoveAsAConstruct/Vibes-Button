@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       // Retrieve the API key from storage
       chrome.storage.sync.get(['openaiApiKey'], function(result) {
           if (result.openaiApiKey) {
-            fetch('https://api.openai.com/v1/engines/ft:babbage-002:personal::8PKhWeDd/completions', {
+            fetch('https://api.openai.com/v1/engines/ft:babbage-002:personal::8QPma3Bo/completions', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
