@@ -137,3 +137,31 @@ z-index: 2;
 0% { transform: translate(-50%, -50%) rotate(0deg); }
 100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
+
+.button-container {
+    position: relative;
+    background-color: wheat;
+}
+
+.hover-button {
+    background-color: var(--background-color);
+    color: var(--secondary-color);
+    border-radius: 10px;
+}
+  
+.hover-button {
+    position: absolute; /* Positioned absolutely within the button container */
+    top: -30px; /* Adjust this to position the button above the activation button */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally */
+    transition: opacity 0.3s, top 0.3s; /* Transition for appearance and movement */
+    opacity: 0; /* Start fully transparent */
+    visibility: hidden; /* Start hidden */
+    /* Rest of your styles */
+}
+
+.button-container:hover .hover-button {
+    opacity: 1; /* Fully visible on hover */
+    visibility: visible; /* Shown on hover */
+    /* Top property does not need to change if it's already positioned above the activation button */
+}

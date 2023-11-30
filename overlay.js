@@ -8,6 +8,7 @@ document.head.appendChild(link);
 console.log("Script loaded");
 console.log('Current URL:', window.location.href); // Get current page URL
 var url;
+var requesting = false;
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.url) {
         console.log("Current URL:", request.url);
@@ -35,11 +36,23 @@ fetch(chrome.runtime.getURL('overlay.html'))
     document.body.appendChild(div);
 
     
-    var collapseButton = document.getElementById('collapse-button');
-    var expandButton = document.getElementById('expand-button');
-    var popupContent = document.getElementById('button-container');
-    var activationButton = document.getElementById('activation-button');
-    var textBox = document.getElementById('text-box');
+    const collapseButton = document.getElementById('collapse-button');
+    const expandButton = document.getElementById('expand-button');
+    const popupContent = document.getElementById('button-container');
+    const activationButton = document.getElementById('activation-button');
+    const textBox = document.getElementById('text-box');
+    const buttonContainer = document.querySelector(".button-container");
+    const hoverButton = document.getElementById('hover-button');
+    const originalHeight = buttonContainer.offsetHeight; // Store the original height
+
+    
+
+    // Add a click event listener for the hover button
+    hoverButton.addEventListener("click", function () {
+        // Handle the click event of the hover button here
+        console.log("Hover button clicked!");
+    });
+
     function revealText(text, object) {
         let index = 0;
         const interval = 10; // Interval between revealing each character (in milliseconds)
@@ -69,54 +82,63 @@ fetch(chrome.runtime.getURL('overlay.html'))
         expandButton.style.display = 'none';
     });
     activationButton.addEventListener('click', function() {
-        // Get the current URL
-        var currentUrl = window.location.href;
-        
-        // Find the text box element
-        var textBox = document.getElementById('text-box');
-        
-        // Set the text box content to the current URL
-        if (textBox) {
-            console.log("url set")
-            textBox.textContent = currentUrl +"...";
-        } else {
-            console.error('Text box element not found');
-        }
-        activationButton.classList.add('loading');
-        chrome.runtime.sendMessage({
-            contentScriptQuery: "queryChatGPT",
-            url: currentUrl
-        }, response => {
-            // Check if textBox exists
-            if (!textBox) {
-                console.error('Text box element not found');
-                return;
-            }
-        
-            // Check for response and any errors
-            if (response) {
-                activationButton.classList.remove('loading');
-                if (response.reply) {
-                    // Use the reply from the background script
-                    console.log(response);
-                    response_chunks = response.reply.split(/\[\[(.*?)\]\]/).filter(Boolean);
-                    response_chunks.sort((a, b) => b.length - a.length);
-                    textBox.innerText = '';
-                    revealText(removeSpecialCharacters(response_chunks[0]), textBox);
-                } else if (response.error) {
-                    // Handle any error sent from the background script
-                    console.error('Error from background script:', response.error);
-                    textBox.textContent = 'Error: ' + response.error;
-                }
+        if(!requesting){
+            requesting = true;
+            // Get the current URL
+            var currentUrl = window.location.href;
+            
+            // Find the text box element
+            var textBox = document.getElementById('text-box');
+            
+            // Set the text box content to the current URL
+            if (textBox) {
+                console.log("url set")
+                textBox.textContent = currentUrl +"...";
             } else {
-                myButton.classList.remove('loading');
-                // Handle the case where response is undefined
-                console.error('No response received from background script');
-                textBox.textContent = 'No response received';
+                console.error('Text box element not found');
             }
-        });        
+            activationButton.classList.add('loading');
+            chrome.runtime.sendMessage({
+                contentScriptQuery: "queryChatGPT",
+                url: currentUrl
+            }, response => {
+                // Check if textBox exists
+                if (!textBox) {
+                    console.error('Text box element not found');
+                    requesting=false;
+                    return;
+                }
+            
+                // Check for response and any errors
+                if (response) {
+                    activationButton.classList.remove('loading');
+                    if (response.reply) {
+                        // Use the reply from the background script
+                        console.log(response);
+                        response_chunks = response.reply.split(/\[\[(.*?)\]\]/).filter(Boolean);
+                        response_chunks.sort((a, b) => b.length - a.length);
+                        textBox.innerText = '';
+                        revealText(removeSpecialCharacters(response_chunks[0]), textBox);
+                    } else if (response.error) {
+                        // Handle any error sent from the background script
+                        console.error('Error from background script:', response.error);
+                        textBox.textContent = 'Error: ' + response.error;
+                    }
+                } else {
+                    myButton.classList.remove('loading');
+                    // Handle the case where response is undefined
+                    console.error('No response received from background script');
+                    textBox.textContent = 'No response received';
+                }
+                requesting=false;        
+            });
+        }
+        else{
+            return;
+        }
     });
     })
+    
   .catch(err => console.error('Error loading the overlay:', err));
 
   
