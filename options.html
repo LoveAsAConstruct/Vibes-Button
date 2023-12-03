@@ -5,15 +5,17 @@
     <link rel="stylesheet" type="text/css" href="overlay.css">
 </head>
 <body>
-    <h1>Extension Options</h1>
-    <div id="extension-options">
-        <label for="api-key">OpenAI API Key:</label>
-        <div>
-            <button id="save">Save</button>
-            <input type="text" id="api-key">
+    <div style="margin: 10px;">
+        <h1>Vibes Button - Options</h1>
+        <div id="extension-options">
+            <h2 for="api-key">OpenAI API Key:</h2>
+            <div style="margin-top: 10px;">
+                <button id="save" class="activation-button">Save API Key</button>
+                <input type="text" placeholder="API-key" id="api-key">
+                <div id="error-message">Invalid API Key</div>
+            </div>
         </div>
     </div>
-
     <script src="options.js"></script>
 </body>
 </html>
