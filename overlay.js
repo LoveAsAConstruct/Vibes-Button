@@ -41,9 +41,7 @@ fetch(chrome.runtime.getURL('overlay.html'))
     const popupContent = document.getElementById('button-container');
     const activationButton = document.getElementById('activation-button');
     const textBox = document.getElementById('text-box');
-    const buttonContainer = document.querySelector(".button-container");
     const hoverButton = document.getElementById('hover-button');
-    const originalHeight = buttonContainer.offsetHeight; // Store the original height
 
     
 
