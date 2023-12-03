@@ -43,6 +43,7 @@
     border-radius: 10px;
 }
 #extension-options button:hover{
+    scale: 1.025;
     background-color: var(--background-color);
     color: var(--secondary-color);
 }
