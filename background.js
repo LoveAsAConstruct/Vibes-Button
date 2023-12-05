@@ -6,17 +6,35 @@ chrome.action.onClicked.addListener((tab) => {
   });
 });
 
+// Inject content script 
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  // Check for a specific URL or condition
+  console.log("listener added");
+  console.log(tab.url);
+  if (tab.url && tab.url.includes("5000")) {
+    console.log("webmatch injection");
+    // Inject the content script
+    chrome.scripting.executeScript({
+        target: { tabId: tabId },
+        files: ['content.js']
+    });
+  }
+});
+
+console.log("test");
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.action === "getApiKey") {
       chrome.storage.sync.get('openaiApiKey', function(data) {
           sendResponse({ openaiApiKey: data.openaiApiKey || 'Key not found' });
       });
       return true; // Return true to indicate an asynchronous response
-  } else if (request.action === "setApiKey" && request.apiKey) {
-      chrome.storage.sync.set({ 'openaiApiKey': request.apiKey }, function() {
-          sendResponse({ status: 'API Key saved' });
+  } else if (request.action === "setApiKey") {
+      console.log("Received API Key to save:", request.apiKey);
+
+      // Save the API key in chrome.storage.local
+      chrome.storage.local.set({ 'openaiApiKey': request.apiKey }, function() {
+          console.log('API Key saved successfully');
       });
-      return true;
   }
 });
 
