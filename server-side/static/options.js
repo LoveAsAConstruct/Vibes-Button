@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    
-    // Load the current API key from storage
-    chrome.storage.sync.get('openaiApiKey', function(data) {
-        document.getElementById('api-key').value = data.openaiApiKey || '';
-    });
+
+    // Function to send a message to the extension's content script
+    function sendMessageToExtension(message) {
+        window.postMessage({ type: "FROM_PAGE", message: message }, "*");
+    }
 
     // Function to verify the API key
     function verifyApiKey(apiKey, callback) {
@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Save the API key when the button is clicked
     document.getElementById('save').addEventListener('click', function() {
         var apiKey = document.getElementById('api-key').value;
-        
         setLoading(true); // Show loading spinner
 
         // Verify the API key before saving
@@ -51,15 +50,24 @@ document.addEventListener('DOMContentLoaded', function() {
             setLoading(false); // Hide loading spinner
 
             if (isValid) {
-                chrome.storage.sync.set({ 'openaiApiKey': apiKey }, function() {
-                    console.log('API Key saved');
-                    updateErrorMessage(false); // Hide error message
-                });
+                // Send a message to the content script to save the API key in the extension's storage
+                sendMessageToExtension({ action: "setApiKey", apiKey: apiKey });
             } else {
                 console.log('Invalid API Key');
                 updateErrorMessage(true); // Show error message
             }
         });
+    });
+
+    // Listen for messages from the content script
+    window.addEventListener("message", function(event) {
+        if (event.source === window && event.data.type === "FROM_EXTENSION") {
+            // Handle the message from the extension
+            if (event.data.message === 'apiKeySaved') {
+                console.log('API Key saved');
+                updateErrorMessage(false); // Hide error message
+            }
+        }
     });
 
     // Hide the error message when the user starts typing a new key

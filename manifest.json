@@ -13,6 +13,9 @@
       "<all_urls>"
     ],
     "options_page": "options.html",
+    "externally_connectable": {
+      "matches": ["*://localhost/*"]
+    },
     "action": {
         "default_icon": {
             "16": "images/icon16.png",
