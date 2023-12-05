@@ -11,6 +11,11 @@ db = SQL("sqlite:///api-logs.db")
 
 CORS(app, origins=["https://example.com", "http://localhost:5000"])
 
+@app.after_request
+def add_csp(response):
+    response.headers['Content-Security-Policy'] = "script-src 'self' 'unsafe-inline' 'unsafe-eval';"
+    return response
+
 @app.route('/options')
 def options():
     return render_template('options.html')  # Ensure 'options.html' is in the 'templates' folder
