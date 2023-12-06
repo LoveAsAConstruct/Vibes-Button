@@ -48,12 +48,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   logStorage();
   if (request.action === "setUserId") {
     // Save the user ID in chrome.storage
+    console.log('Setting UserId:', request.userId);
     chrome.storage.sync.set({ 'userId': request.userId }, function() {
         console.log('User ID saved:', request.userId);
     });
   } else if (request.action === "getUserId") {
       // Retrieve the user ID from chrome.storage
+      console.log('Getting UserId:', request.userId);
       chrome.storage.sync.get('userId', function(data) {
+          console.log('UserID Sending:', request.userId);
           sendResponse({ userId: data.userId || null });
       });
       return true; // Indicate that the response is asynchronous

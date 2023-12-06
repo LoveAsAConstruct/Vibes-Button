@@ -1,25 +1,33 @@
-document.getElementById('register-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+document.getElementById('register-form').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-    const username = document.getElementById('register-username').value;
-    const password = document.getElementById('register-password').value;
+    // Extract registration data from form
+    const formData = new FormData(event.target);
+    const username = formData.get('username');
+    const password = formData.get('password');
 
-    fetch('http://localhost:5000/register', {
+    // Perform AJAX request to Flask server for registration
+    fetch('/api/register', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: username, password: password })
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
     })
     .then(response => response.json())
     .then(data => {
-        if (data.status === "registered") {
-            chrome.storage.local.set({ 'isLoggedIn': true, 'userId': data.user_id });
-            alert('Registration successful');
+        if (data.status === 'success') {
+            // Send a message to the extension's content script
+            sendMessageToExtension({ action: "setUserId", userId: data.user_id });
         } else {
-            alert('Registration failed: ' + data.error);
+            // Handle error
+            console.error('Registration failed:', data.message);
         }
     })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Registration failed');
-    });
+    .catch(error => console.error('Error:', error));
 });
+
+// Function to send a message to the extension's content script
+function sendMessageToExtension(message) {
+    window.postMessage({ type: "FROM_PAGE", message: message }, "*");
+}
