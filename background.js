@@ -6,6 +6,20 @@ chrome.action.onClicked.addListener((tab) => {
   });
 });
 
+
+function logCurrentOpenAIKey() {
+  chrome.storage.sync.get('openaiApiKey', function(data) {
+      if (data.openaiApiKey) {
+          console.log("Current OpenAI API Key:", data.openaiApiKey);
+      } else {
+          console.log("No OpenAI API Key found in storage.");
+      }
+  });
+}
+
+// Call the function to log the API key
+logCurrentOpenAIKey();
+
 // Inject content script 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   // Check for a specific URL or condition
@@ -23,20 +37,39 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 
 console.log("test");
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  // Test setting a value
+  chrome.storage.sync.set({ 'testKey': 'testValue' }, function() {
+    console.log('Value is set to testValue');
+  });
+
+  // Test getting a value
+  chrome.storage.sync.get(['testKey'], function(result) {
+    console.log('Value currently is ' + result.testKey);
+  });
+  console.log("Message received in background script3 :", request);
+  logCurrentOpenAIKey();
   if (request.action === "getApiKey") {
+      console.log("reyreq");
+      // Retrieve the API key from chrome.storage.sync
       chrome.storage.sync.get('openaiApiKey', function(data) {
+          console.log("kereqfinished");
           sendResponse({ openaiApiKey: data.openaiApiKey || 'Key not found' });
       });
-      return true; // Return true to indicate an asynchronous response
+      return true; // Return true for asynchronous response
   } else if (request.action === "setApiKey") {
       console.log("Received API Key to save:", request.apiKey);
 
-      // Save the API key in chrome.storage.local
-      chrome.storage.local.set({ 'openaiApiKey': request.apiKey }, function() {
+      // Save the API key in chrome.storage.sync
+      chrome.storage.sync.set({ 'openaiApiKey': request.apiKey }, function() {
           console.log('API Key saved successfully');
+          logCurrentOpenAIKey();
       });
+      return true;
   }
+
+  return false;
 });
+
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.contentScriptQuery == "queryChatGPT") {

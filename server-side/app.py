@@ -15,7 +15,9 @@ CORS(app, origins=["https://example.com", "http://localhost:5000"])
 def add_csp(response):
     response.headers['Content-Security-Policy'] = "script-src 'self' 'unsafe-inline' 'unsafe-eval';"
     return response
-
+@app.route('/')
+def home():
+    return render_template('options.html')
 @app.route('/options')
 def options():
     return render_template('options.html')  # Ensure 'options.html' is in the 'templates' folder
