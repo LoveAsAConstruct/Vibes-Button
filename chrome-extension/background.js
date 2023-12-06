@@ -7,7 +7,7 @@ chrome.action.onClicked.addListener((tab) => {
 });
 
 
-function logCurrentOpenAIKey() {
+function logStorage() {
   chrome.storage.sync.get('openaiApiKey', function(data) {
       if (data.openaiApiKey) {
           console.log("Current OpenAI API Key:", data.openaiApiKey);
@@ -15,10 +15,17 @@ function logCurrentOpenAIKey() {
           console.log("No OpenAI API Key found in storage.");
       }
   });
+  chrome.storage.sync.get('userId', function(data) {
+    if (data.userId) {
+        console.log("Current userId Key:", data.userId);
+    } else {
+        console.log("No userId found in storage.");
+    }
+});
 }
 
 // Call the function to log the API key
-logCurrentOpenAIKey();
+logStorage();
 
 // Inject content script 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
@@ -37,17 +44,20 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 
 console.log("test");
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  // Test setting a value
-  chrome.storage.sync.set({ 'testKey': 'testValue' }, function() {
-    console.log('Value is set to testValue');
-  });
-
-  // Test getting a value
-  chrome.storage.sync.get(['testKey'], function(result) {
-    console.log('Value currently is ' + result.testKey);
-  });
   console.log("Message received in background script3 :", request);
-  logCurrentOpenAIKey();
+  logStorage();
+  if (request.action === "setUserId") {
+    // Save the user ID in chrome.storage
+    chrome.storage.sync.set({ 'userId': request.userId }, function() {
+        console.log('User ID saved:', request.userId);
+    });
+  } else if (request.action === "getUserId") {
+      // Retrieve the user ID from chrome.storage
+      chrome.storage.sync.get('userId', function(data) {
+          sendResponse({ userId: data.userId || null });
+      });
+      return true; // Indicate that the response is asynchronous
+  }
   if (request.action === "getApiKey") {
       console.log("reyreq");
       // Retrieve the API key from chrome.storage.sync

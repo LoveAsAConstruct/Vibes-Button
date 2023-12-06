@@ -15,9 +15,11 @@ CORS(app, origins=["https://example.com", "http://localhost:5000"])
 def add_csp(response):
     response.headers['Content-Security-Policy'] = "script-src 'self' 'unsafe-inline' 'unsafe-eval';"
     return response
+
 @app.route('/')
 def home():
     return render_template('options.html')
+
 @app.route('/options')
 def options():
     return render_template('options.html')  # Ensure 'options.html' is in the 'templates' folder
@@ -36,12 +38,12 @@ def register():
         # Hash the password and insert new user
         password_hash = generate_password_hash(password)
         db.execute("INSERT INTO users (username, password_hash) VALUES (?, ?)", username, password_hash)
-        # After successful registration:
-        user_id = db.execute("SELECT id FROM users WHERE username = ?", username)
-        return jsonify({"status": "registered", "user_id": user_id[0]["id"]})
+
+        # After successful registration, retrieve user ID
+        user_id = db.execute("SELECT id FROM users WHERE username = ?", username)[0]['id']
+        return jsonify({"action": "setUserId", "userId": user_id})
     else:  # GET request
         return render_template('register.html')
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -49,11 +51,11 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-         # Retrieve user by username
+        # Retrieve user by username
         user = db.execute("SELECT * FROM users WHERE username = ?", username)
-
         if user and check_password_hash(user[0]["password_hash"], password):
-            return jsonify({"status": "logged in", "user_id": user[0]["id"]})
+            # Send a message to set user ID
+            return jsonify({"action": "setUserId", "userId": user[0]["id"]})
         else:
             return jsonify({"error": "Invalid username or password"}), 401
     else:  # GET request
@@ -61,19 +63,8 @@ def login():
 
 @app.route('/logout', methods=['POST'])
 def logout():
-    # Perform any necessary logout logic
-    return jsonify({"status": "logged out"})
-
-@app.route('/log-api-call', methods=['POST'])
-def log_api_call():
-    try:
-        data = request.json
-        db.execute("INSERT INTO apicalls (user_id, tokens, url, response) VALUES (?, ?, ?, ?)",
-                   data['user_id'], data['tokens'], data['url'], data['response'])
-        return jsonify({"status": "success"})
-    except Exception as e:
-        print(e)
-        return jsonify({"error": str(e)}), 500
+    # For logout, return a special user_id indicating logged out status
+    return jsonify({"action": "setUserId", "userId": None})
 
 if __name__ == '__main__':
     app.run(debug=True)
