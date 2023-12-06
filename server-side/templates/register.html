@@ -4,7 +4,7 @@
     <title>Register</title>
 </head>
 <body>
-    <form action="/register" method="post">
+    <form action="/register" method="post" id="register-form">
         <input type="text" name="username" placeholder="Username">
         <input type="password" name="password" placeholder="Password">
         <button type="submit">Register</button>
@@ -12,6 +12,5 @@
 
     <p>Already have an account? <a href="/login">Login here</a></p>
     <p style="color: red;">{{error}}</p>
-    <script src="{{ url_for('static', filename='js/register.js') }}"></script>
 </body>
 </html>

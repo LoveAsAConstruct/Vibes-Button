@@ -1,4 +1,6 @@
+console.log("I am the login page!");
 document.getElementById('login-form').addEventListener('submit', function(event) {
+    console.log("submission");
     event.preventDefault();
 
     // Extract credentials from form
@@ -18,7 +20,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     .then(data => {
         if (data.status === 'success') {
             // Send a message to the extension's content script
-            window.postMessage({ type: "FROM_PAGE", action: "setUserId", userId: userId }, "*");
+            window.postMessage({ type: "SET_USER_ID", userId: userId }, "*");
         } else {
             // Handle error
             console.error('Login failed:', data.message);

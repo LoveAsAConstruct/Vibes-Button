@@ -18,7 +18,7 @@ document.getElementById('register-form').addEventListener('submit', function(eve
     .then(data => {
         if (data.status === 'success') {
             // Send a message to the extension's content script
-            sendMessageToExtension({ action: "setUserId", userId: data.user_id });
+            sendMessageToExtension({ action: "SET_USER_ID", userId: data.user_id });
         } else {
             // Handle error
             console.error('Registration failed:', data.message);
