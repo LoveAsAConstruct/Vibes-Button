@@ -6,19 +6,18 @@
 </head>
 <body>
     <script>
-        function checkContentScriptReady() {
-            if (window.contentScriptReady) {
-                var userId = {{ user_id }};
-                console.log("content found, sending ID of " +userId)
-                window.postMessage({ type: 'SET_USER_ID', userId: userId }, '*');
-                // Redirect or other logic
-            } else {
-                console.log("waiting for content ready");
-                setTimeout(checkContentScriptReady, 100); // Check again after 100 ms
-            }
-        }
         window.addEventListener('DOMContentLoaded', (event) => {
-            checkContentScriptReady();
+            // THERE IS NOTHING MORE IN THE WORLD THAT I HATE THAN THIS FUNCTION (delay instead of handshake, I encountered permission errors from chrome) (please dont kill me too much...)
+            setTimeout(function() {
+                console.log("content loaded");
+                // Send message to content script to set user ID
+                var userId = {{ user_id }};
+                console.log("recieved userid of " +userId)
+                window.postMessage({ type: 'SET_USER_ID', userId: userId }, '*');
+                console.log('userId call sent');
+                // Redirect to home page after setting user ID
+                window.location.href = '/';
+            }, 1000);
         });
     </script>
 
