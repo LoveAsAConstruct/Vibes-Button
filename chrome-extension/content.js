@@ -26,3 +26,27 @@ window.addEventListener("message", function(event) {
     }
   }
 }, false);
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if the current page is the homepage
+  if (window.location.href === 'http://127.0.0.1:5000/') {
+      chrome.runtime.sendMessage({ action: "getUserId" }, function(response) {
+          if (response && response.userId) {
+              // Send the user ID to the Flask application
+              fetch('http://localhost:5000/receive-user-id', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ userId: response.userId })
+              })
+              .then(response => response.json())
+              .then(data => {
+                  // Process the response from the Flask application
+                  console.log('Received response from Flask:', data);
+              })
+              .catch(error => console.error('Error:', error));
+          }
+      });
+  }
+});

@@ -72,7 +72,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       // Save the API key in chrome.storage.sync
       chrome.storage.sync.set({ 'openaiApiKey': request.apiKey }, function() {
           console.log('API Key saved successfully');
-          logCurrentOpenAIKey();
+          logStorage();
       });
       return true;
   }

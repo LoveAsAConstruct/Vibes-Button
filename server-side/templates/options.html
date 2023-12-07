@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Extension Options</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='overlay.css') }}">
-</head>
-<body>
-    <div style="margin: 10px;">
-        <h1>Vibes Button - Options</h1>
+{% extends 'layout.html' %}
+{% block header %}
+    <title>Vibes Button: API key</title>
+    <!-- Other head elements specific to the options page -->
+{% endblock %}
+{% block content %}
+    <h1>Configure API Key</h1>
         <div id="extension-options">
             <h2 for="api-key">OpenAI API Key:</h2>
             <div style="margin-top: 10px;">
@@ -17,5 +15,5 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='options.js') }}"></script>
-</body>
-</html>
+{% endblock %}
+
