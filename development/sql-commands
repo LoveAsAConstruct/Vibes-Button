@@ -1,0 +1,8 @@
+-- database: /Users/isaiahmurray/Documents/Vibes Button!/server-side/api-logs.db
+
+-- Use the ▷ button in the top right corner to run the entire file.
+
+SELECT * FROM "users"
+ORDER BY "id" ASC;
+
+CREATE TABLE "apicalls" ("id" INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, "time" NUMERIC UNIQUE NOT NULL DEFAULT (CURRENT_TIMESTAMP), user_id INTEGER NOT NULL, "tokens" INTEGER NOT NULL, "url" TEXT NOT NULL, "response" TEXT NOT NULL);

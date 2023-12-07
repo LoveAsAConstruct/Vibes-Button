@@ -4,16 +4,18 @@
     <!-- Other head elements specific to the options page -->
 {% endblock %}
 {% block content %}
-    <h1>Configure API Key</h1>
+    <div class="api-config-container">
+        <h1>Configure API Key</h1>
         <div id="extension-options">
-            <h2 for="api-key">OpenAI API Key:</h2>
-            <div style="margin-top: 10px;">
-                <button id="save" class="activation-button">Save API Key</button>
-                <input type="text" placeholder="API-key" id="api-key">
-                <p class="error-text" style="visibility: hidden;">Invalid API Key</p>
+            <label for="api-key" class="api-key-label">OpenAI API Key:</label>
+            <div class="input-group">
+                <input type="text" placeholder="API-key" id="api-key" class="api-key-input">
+                <button id="save" class="save-button">Save API Key</button>
+                <p class="error-text">Invalid API Key</p>
             </div>
         </div>
     </div>
+
     <script src="{{ url_for('static', filename='options.js') }}"></script>
 {% endblock %}
 

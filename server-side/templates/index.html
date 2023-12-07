@@ -3,7 +3,29 @@
     <title>Vibes Button: Home</title>
     <!-- Other head elements specific to the home page -->
 {% endblock %}
+
 {% block content %}
+<div style="margin: 20px;">
     <h1>Welcome {{ username }}!</h1>
-    <!-- Additional content for the home page -->
+    <h4>Total Tokens Used: <span class="status-text">{{ total_tokens }}</span></h4>
+    <h4>Total Requests Made: <span class="status-text">{{ total_requests }}</span></h4>
+    <div class="entry-container">
+        <h2>Activity Logs</h2>
+        <!-- Display the list of entries -->
+        <ul class="entry-list">
+            {% for entry in entries %}
+                <li class="entry">
+                    <div class="response">{{ entry.response }}</div>
+                    <div class="details">
+                        <strong>Time:</strong> {{ entry.time }}<br>
+                        <strong>Tokens:</strong> {{ entry.tokens }}<br>
+                        <strong>URL:</strong> <a href="{{ entry.url }}" target="_blank">{{ entry.url }}</a>
+                    </div>
+                </li>
+            {% else %}
+                <li>No entries found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock %}

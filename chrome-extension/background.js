@@ -6,6 +6,38 @@ chrome.action.onClicked.addListener((tab) => {
   });
 });
 
+function approximateTokenCount(text) {
+  // Basic approximation: count spaces for words and add extra for potential sub-word tokens
+  const wordCount = text.split(' ').length; // Count words (approximated by splitting by spaces)
+  const extraTokensForSubwords = Math.floor(text.length / 8); // Rough estimate for sub-word tokens
+  return wordCount + extraTokensForSubwords;
+}
+
+function sendDataToServer(apiTokens, apiUrl, apiResponse, userId) {
+  console.log("sending data")
+  let data = {
+      user_id: userId,
+      tokens: apiTokens,
+      url: apiUrl,
+      response: apiResponse
+  };
+
+  fetch('http://127.0.0.1:5000/api/store', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log('Success:', data);
+  })
+  .catch((error) => {
+      console.error('Error:', error);
+  });
+}
+
 
 function logStorage() {
   chrome.storage.sync.get('openaiApiKey', function(data) {
@@ -86,57 +118,45 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       // Retrieve the API key from storage
       chrome.storage.sync.get(['openaiApiKey'], function(result) {
           if (result.openaiApiKey) {
-            fetch('https://api.openai.com/v1/engines/ft:babbage-002:personal::8QPma3Bo/completions', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': 'Bearer ' +result.openaiApiKey  // Replace with your actual API key
-              },
-              body: JSON.stringify({
-                  prompt: "You are a supportive assistant interpreting inputs as positive sayings. Input: '" +request.url +"'",   // Update this with your actual prompt
+              let apiUrl = request.url; // URL from the request
+              let requestBody = {
+                  prompt: "You are a supportive assistant interpreting inputs as positive sayings. Input: '" + request.url + "'", // Update this with your actual prompt
                   max_tokens: 125,
-                  temperature: 1,
-                  // Add any other parameters you might need
-              })
-            })
-            
-              .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok: ' + response.status +", " +response.statusText);
-                }
+                  temperature: 1
+              };
 
-                let apiCallData = {
-                  user_id: 1,   // Replace with actual user ID
-                  tokens: 125,  // Replace with the number of tokens used
-                  url: request.url,  // Replace with the API URL
-                  response: "e"
-                  // Replace with the API response
-                };
-
-                // URL of your Flask endpoint
-                let flaskEndpoint = 'http://localhost:5000/log-api-call';  // Replace with the actual URL of your Flask app
-
-                fetch(flaskEndpoint, {
+              fetch('https://api.openai.com/v1/engines/ft:babbage-002:personal::8QPma3Bo/completions', {
                   method: 'POST',
                   headers: {
                       'Content-Type': 'application/json',
+                      'Authorization': 'Bearer ' + result.openaiApiKey
                   },
-                  body: JSON.stringify(apiCallData)
-                })
-                .then(response => response.json())
-                .then(data => console.log('Success in flask push:', data))
-                .catch((error) => console.error('Error in flask push:', error));
-
-                // Example data to be logged
-                return response.json();
+                  body: JSON.stringify(requestBody)
+              })
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Network response was not ok: ' + response.status + ", " + response.statusText);
+                  }
+                  return response.json();  // Convert to JSON
               })
               .then(data => {
                   console.log('Response JSON:', data); // Log the JSON data
-                  // Handle the JSON data
-                  return data;  // Return the data for the next .then() block
-              })
-              .then(data => {
-                  sendResponse({ reply: data.choices[0].text }); // Use the data here
+                  sendResponse({ reply: data.choices[0].text }); // Send the data back to the content script
+
+                  // Retrieve userId from Chrome storage
+                  chrome.storage.sync.get(['userId'], function(result) {
+                      if (result.userId) {
+                          let userId = result.userId;
+                          let apiResponseData = JSON.stringify(data.choices[0].text);
+                          let datalist = apiResponseData.split(/\[\[(.*?)\]\]/).filter(Boolean);
+                          datalist.sort((a, b) => b.length - a.length);
+                          let apiResponse = datalist[0]; // Convert response data to string
+                          let apiTokens = approximateTokenCount(apiResponse); // Token count
+                          sendDataToServer(apiTokens, apiUrl, apiResponse, userId); // Send data to your server
+                      } else {
+                          console.error('UserId not found in Chrome storage');
+                      }
+                  });
               })
               .catch(error => {
                   console.error('Error during OpenAI API call:', error);
@@ -147,6 +167,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
               sendResponse({ error: 'API key not set in extension settings' });
           }
       });
-      return true; // indicates we want to send a response asynchronously
+      return true; // Indicates we want to send a response asynchronously
   }
 });

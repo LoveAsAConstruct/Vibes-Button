@@ -9,7 +9,9 @@ body {
     font-family: Arial, sans-serif;
     background-color: var(--background-color);
 }
-
+.status-text {
+    color: var(--primary-color);
+}
 /* Navbar styling (unchanged) */
 .navbar {
     background-color: var(--secondary-color);
@@ -100,4 +102,117 @@ input:focus {
     padding: 10px;
     border-radius: 10px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.entry-container {
+    margin: 50px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    background-color: var(--background-color);
+}
+
+.entry-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.entry {
+    background-color: #f9f9f9;
+    border-left: 4px solid var(--primary-color);
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    transition: border-left-width 0.3s ease, background-color 0.3s ease;
+}
+
+.entry:hover {
+    background-color: #f1f1f1;
+    border-left-width: 8px;
+}
+
+.response {
+    font-size: 1.2em;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+.details {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 10px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.entry:hover .details {
+    max-height: 100px; /* Adjust as needed */
+    opacity: 1;
+}
+
+.details strong {
+    color: var(--secondary-color);
+}
+
+.details a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.details a:hover {
+    text-decoration: underline;
+}
+
+.api-config-container {
+    max-width: 800px;
+    margin: 20px auto;
+    margin-top: 50px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    background-color: var(--background-color);
+    text-align: center;
+}
+
+.api-key-label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--secondary-color);
+    font-size: 1.2em;
+}
+
+.input-group {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.api-key-input {
+    padding: 8px 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: calc(90% - 120px); /* Adjust width minus button width */
+}
+
+.save-button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+    background-color: darken(var(--primary-color), 10%);
+}
+
+.error-text {
+    color: red;
+    margin-top: 10px;
+    visibility: hidden; /* Show only when there's an error */
+    font-size: 0.9em;
 }

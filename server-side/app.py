@@ -21,7 +21,13 @@ def home():
     if 'user_id' in session and session['user_id'] is not None and session['user_id'] != -1:
         # User is logged in, render the main content page with user details
         user = get_user_info(session['user_id']) 
-        return render_template('index.html', username=user['username'])
+        entries = db.execute("SELECT * FROM apicalls WHERE user_id = :user_id", user_id=user["id"])
+        entries.reverse();
+        total_tokens = sum(entry['tokens'] for entry in entries)
+        total_requests = len(entries)
+
+        return render_template('index.html', username=user["username"], entries=entries, total_tokens=total_tokens, total_requests=total_requests)
+
     else:
         # User is not logged in, render the login page
         return render_template('login.html')
@@ -79,6 +85,14 @@ def logout():
     # Logic to handle logout
     session.pop('user_id', None);
     return render_template('post_logout.html');
+
+@app.route('/api/store', methods=['POST'])
+def store_data():
+    data = request.json
+    db.execute("INSERT INTO apicalls (user_id, tokens, url, response) VALUES (?, ?, ?, ?)", 
+               data['user_id'], data['tokens'], data['url'], data['response'])
+    print("Logging")
+    return {'status': 'success'}
 
 if __name__ == '__main__':
     app.run(debug=True)
