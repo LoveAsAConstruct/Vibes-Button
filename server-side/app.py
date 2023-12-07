@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from cs50 import SQL
 
 app = Flask(__name__)
-app.secret_key = 'ak;jsdnakwhkbwdakjwdn;lrfkjnasdg' # Random String
+app.secret_key = 'ghdL2m8Esx2MFkqHmFdNptL6Hdu37UKYc29DtgMLWZUfrapTbgwUKT80ZpgBoA0GamqFSoq4sjA1MA6ZayyR02N1lvNKufZd' # Random String
 
 db = SQL("sqlite:///api-logs.db")
 
