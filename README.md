@@ -1,0 +1,17 @@
+Hello all!
+
+This is a project I develeoped for the CS50 Final Project. It consists of a chrome extension and a server-based client. Both communicate with eachother and the OpenAI api to generate happy-go-lucky and positive quotes on whatever website the user activates the extension on. The extension is currently designed only for pc and laptop users, however there is potential for mobile accessibility in the future.
+
+The hierarchy of this project primarily consists of a server-side folder and a chrome-extension folder. These both have to be interacted with to run this project. The server side folder houses a flask-based server and its resources. The chrome-extension folder houses the resources for the chrome extension. 
+
+To begin the setup, download the repository with "gh repo clone LoveAsAConstruct/Vibes-Button" or by manually downloading the most recent main branch from "https://github.com/LoveAsAConstruct/Vibes-Button" After that, you will want to open your chrome broweser and navigate to "chrome://extensions/" You will then have to look at the upper right of the screen to toggle a developer mode switch. Once developer mode has been activated, you then will want to click the load unpacked button in the upper left, and navigate to the chrome-extension folder. You may then confirm the folder and a new extension should appear within your library. Once this is complete, you will want to open a terminal tab within the server-side folder and run the command "flask run". You should obtain this output:
+
+    server-side % flask run
+    * Debug mode: off
+    INFO: WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+    * Running on http://127.0.0.1:5000
+    INFO: Press CTRL+C to quit
+
+If you would like to confirm the flask app started, you can navigate to http://127.0.0.1:5000, where you should see a login page for my Vibes Button application. As you don't have an account, you can click the link to go to the register page, where you can create an account. Once you've created an account, you should experience a redirect to the homepage, which will have a Welcome message and an empty logs recording. You now need to enter your OpenAI API key. To do this, you will need to have a key connected to an account with funds. Unfortunately OpenAI scrapes Github for scraped keys, but I will include a google drive link to a key with 5$ of compute credits. Back in the homepage, click the dropdown labled settings in the top right and click "Switch API Key" this will bring you to a page with an input field and a save button. Paste the key into the input field and click the button. If an "Invalid openAI key" message didn't appear, then the key should be installed within the extension. Now, if you click the chrome extension within your extensions (can be found by clicking the puzzle piece icon in the top right of your browser), a orange button should appear on most sites on the bottom right of your screen. Please not that some sites have popup/extension prevention enabled which prevents this extension from appearing. By clicking this button, it should start spinning/loading, and output a sentence or two on the topic of your browser's page. If you navigate back to the homepage of your account and refresh, you should see a log of all requests you have made in your accounts history. 
+
+And thats about it for setup, thanks for reading!
