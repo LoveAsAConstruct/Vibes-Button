@@ -1,13 +1,16 @@
 :root {
-    --primary-color: #ff7f50; /* Orange primary color */
-    --secondary-color: #969696; /* Light gray secondary color */
-    --background-color: white; /* Background color */
+    --primary-color: #ff4500; /* primary color */
+    --secondary-color: #333; /* secondary color */
+    --background-color: #f3f3f3; /* background color */
+    --error-color: #ff0000; /* Red error color */
 }
 
 body {
+    font-family: Arial, sans-serif;
     background-color: var(--background-color);
 }
 
+/* Navbar styling (unchanged) */
 .navbar {
     background-color: var(--secondary-color);
 }
@@ -21,10 +24,80 @@ body {
 }
 
 .dropdown-menu {
-    background-color: var(--secondary-color);
+    background-color: var(--background-color);
 }
 
 .dropdown-item:hover {
     background-color: var(--primary-color);
     color: white;
+}
+
+/* Button styling */
+button {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    border-radius: 5px;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: box-shadow ease-in-out 0.2s, background-color ease-in-out 0.2s;
+}
+
+button:hover {
+    background-color: lighten(var(--background-color), 20%);
+    color: var(--secondary-color);
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+    box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Input field styling */
+input {
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+input:focus {
+    border-color: var(--primary-color);
+}
+
+/* Error text styling */
+.error-text {
+    color: var(--error-color);
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.centered-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Make the container full height of the viewport */
+}
+
+.centered-elements {
+    text-align: center; /* Center text content horizontally within the div */
+}
+.centered-elements > * {
+    margin: 10px; /* Add spacing between stacked elements if needed */
+}
+.vertical-form {
+    display: flex;
+    flex-direction: column; /* Align form elements vertically */
+    text-align: left; /* Left-align form labels */
+    padding: 20px;
+}
+.vertical-form > * {
+    margin: 5px;
+}
+.asthetic-container {
+    background-color: var(--background-color);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
 }

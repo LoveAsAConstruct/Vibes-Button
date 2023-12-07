@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logout Successful</title>
+</head>
+<body>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // THERE IS NOTHING MORE IN THE WORLD THAT I HATE THAN THIS FUNCTION (delay instead of handshake, I encountered permission errors from chrome) (please dont kill me too much...)
+            setTimeout(function() {
+                console.log("content loaded");
+                // Send message to content script to set user ID
+                var userId = -1;
+                console.log("recieved userid of " +userId)
+                window.postMessage({ type: 'SET_USER_ID', userId: userId }, '*');
+                console.log('userId call sent');
+                // Redirect to home page after setting user ID
+                window.location.href = '/';
+            }, 1000);
+        });
+    </script>
+
+    <h1>Logout Successful</h1>
+    <p>Redirecting to home page...</p>
+</body>
+</html>

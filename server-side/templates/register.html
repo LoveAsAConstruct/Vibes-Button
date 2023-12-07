@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Register</title>
+    <link href="static/styles.css" rel="stylesheet">
 </head>
 <body>
     <form action="/register" method="post" id="register-form">
@@ -11,6 +12,6 @@
     </form>
 
     <p>Already have an account? <a href="/login">Login here</a></p>
-    <p style="color: red;">{{error}}</p>
+    <p class="error-text">{{error}}</p>
 </body>
 </html>

@@ -18,7 +18,7 @@ def get_user_info(user_id):
 @app.route('/')
 def home():
     # Check if user is logged in (you can use session or other methods based on your setup)
-    if 'user_id' in session and session['user_id'] is not None:
+    if 'user_id' in session and session['user_id'] is not None and session['user_id'] != -1:
         # User is logged in, render the main content page with user details
         user = get_user_info(session['user_id']) 
         return render_template('index.html', username=user['username'])
@@ -28,7 +28,7 @@ def home():
     
 @app.route('/options')
 def options():
-    if 'user_id' in session:
+    if 'user_id' in session and session['user_id'] != -1:
         return render_template('options.html')
     else:
         return redirect(url_for('login'))
@@ -74,11 +74,11 @@ def login():
     else:
         return render_template('login.html')
 
-@app.route('/logout', methods=['POST'])
+@app.route('/logout', methods=['POST', 'GET'])
 def logout():
     # Logic to handle logout
-    session.pop('user_id', None)
-    return jsonify({"status": "logged out"})
+    session.pop('user_id', None);
+    return render_template('post_logout.html');
 
 if __name__ == '__main__':
     app.run(debug=True)

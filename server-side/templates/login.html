@@ -2,15 +2,24 @@
 <html>
 <head>
     <title>Login</title>
+    <link href="static/styles.css" rel="stylesheet">
 </head>
 <body>
-    <form action="/login" method="post" id="login-form">
-        <input type="text" name="username" placeholder="Username">
-        <input type="password" name="password" placeholder="Password">
-        <button type="submit">Login</button>
-    </form>
+    <div class="centered-container">
+        <div class="centered-elements">
+            <div class="asthetic-container">
+                <h1>Vibes Button :)</h1>
+                <h2>Login</h2>
+                <form action="/login" method="post" id="login-form" class="vertical-form">
+                    <input type="text" name="username" placeholder="Username">
+                    <input type="password" name="password" placeholder="Password">
+                    <button type="submit" class="btn">Login</button>
+                </form>
 
-    <p>Don't have an account? <a href="/register">Register here</a></p>
-    <p style="color: red;">{{error}}</p>
+                <p>Don't have an account? <a href="/register">Register here</a></p>
+                <p class="error-text">{{error}}</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
