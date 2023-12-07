@@ -1,63 +1,58 @@
 :root {
-    --primary-color: #ff4500; /* primary color */
-    --secondary-color: #333; /* secondary color */
-    --background-color: #f3f3f3; /* background color */
-    --error-color: #ff0000; /* Red error color */
+    --background-color: #f3f3f3;
+    --error-color: #ff0000;
+    --primary-color: #ff4500;
+    --secondary-color: #333;
 }
 
 body {
-    font-family: Arial, sans-serif;
     background-color: var(--background-color);
+    font-family: Arial, sans-serif;
 }
-.status-text {
+
+.status-text, 
+.navbar-brand, 
+.navbar-nav .nav-link,
+.dropdown-item:hover,
+button,
+button:active {
     color: var(--primary-color);
 }
-/* Navbar styling (unchanged) */
+
 .navbar {
     background-color: var(--secondary-color);
 }
 
-.navbar-brand, .navbar-nav .nav-link {
-    color: var(--primary-color);
-}
-
-.navbar-brand:hover, .navbar-nav .nav-link:hover {
-    color: lighten(var(--primary-color), 20%); /* Lighter shade of orange on hover */
+.navbar-brand:hover, 
+.navbar-nav .nav-link:hover {
+    color: lighten(var(--primary-color), 20%);
 }
 
 .dropdown-menu {
     background-color: var(--background-color);
 }
 
-.dropdown-item:hover {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-/* Button styling */
 button {
     background-color: var(--primary-color);
-    color: var(--background-color);
-    border-radius: 5px;
     border: none;
-    padding: 5px 10px;
+    border-radius: 5px;
+    color: var(--background-color);
     cursor: pointer;
-    transition: box-shadow ease-in-out 0.2s, background-color ease-in-out 0.2s;
+    padding: 5px 10px;
+    transition: background-color ease-in-out 0.2s, box-shadow ease-in-out 0.2s;
 }
 
 button:hover {
     background-color: lighten(var(--background-color), 20%);
-    color: var(--secondary-color);
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    color: var(--secondary-color);
 }
 
 button:active {
     background-color: var(--secondary-color);
-    color: var(--background-color);
     box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Input field styling */
 input {
     border: 1px solid var(--secondary-color);
     border-radius: 5px;
@@ -68,7 +63,6 @@ input:focus {
     border-color: var(--primary-color);
 }
 
-/* Error text styling */
 .error-text {
     color: var(--error-color);
     font-size: 14px;
@@ -76,40 +70,44 @@ input:focus {
 }
 
 .centered-container {
+    align-items: center;
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    height: 100vh; /* Make the container full height of the viewport */
+    height: 100vh;
+    justify-content: center;
 }
 
 .centered-elements {
-    text-align: center; /* Center text content horizontally within the div */
+    text-align: center;
 }
+
 .centered-elements > * {
-    margin: 10px; /* Add spacing between stacked elements if needed */
+    margin: 10px;
 }
+
 .vertical-form {
     display: flex;
-    flex-direction: column; /* Align form elements vertically */
-    text-align: left; /* Left-align form labels */
+    flex-direction: column;
     padding: 20px;
+    text-align: left;
 }
+
 .vertical-form > * {
     margin: 5px;
 }
-.asthetic-container {
+
+.asthetic-container,
+.entry-container,
+.api-config-container {
     background-color: var(--background-color);
-    padding: 10px;
     border-radius: 10px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    padding: 20px;
 }
 
-.entry-container {
-    margin: 50px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    background-color: var(--background-color);
+.entry-container,
+.api-config-container {
+    margin: 20px auto;
+    max-width: 800px;
 }
 
 .entry-list {
@@ -120,10 +118,10 @@ input:focus {
 .entry {
     background-color: #f9f9f9;
     border-left: 4px solid var(--primary-color);
-    padding: 20px;
-    margin-bottom: 15px;
     border-radius: 8px;
-    transition: border-left-width 0.3s ease, background-color 0.3s ease;
+    margin-bottom: 15px;
+    padding: 20px;
+    transition: background-color 0.3s ease, border-left-width 0.3s ease;
 }
 
 .entry:hover {
@@ -132,23 +130,23 @@ input:focus {
 }
 
 .response {
-    font-size: 1.2em;
     color: var(--secondary-color);
+    font-size: 1.2em;
     margin-bottom: 10px;
 }
 
 .details {
-    font-size: 0.9em;
     color: #666;
+    font-size: 0.9em;
     margin-top: 10px;
     max-height: 0;
-    overflow: hidden;
     opacity: 0;
+    overflow: hidden;
     transition: max-height 0.5s ease, opacity 0.5s ease;
 }
 
 .entry:hover .details {
-    max-height: 100px; /* Adjust as needed */
+    max-height: 100px;
     opacity: 1;
 }
 
@@ -165,22 +163,11 @@ input:focus {
     text-decoration: underline;
 }
 
-.api-config-container {
-    max-width: 800px;
-    margin: 20px auto;
-    margin-top: 50px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 10px;
-    background-color: var(--background-color);
-    text-align: center;
-}
-
 .api-key-label {
-    display: block;
-    margin-bottom: 10px;
     color: var(--secondary-color);
+    display: block;
     font-size: 1.2em;
+    margin-bottom: 10px;
 }
 
 .input-group {
@@ -189,20 +176,20 @@ input:focus {
 }
 
 .api-key-input {
-    padding: 8px 10px;
-    margin-right: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    width: calc(90% - 120px); /* Adjust width minus button width */
+    margin-right: 10px;
+    padding: 8px 10px;
+    width: calc(90% - 120px);
 }
 
 .save-button {
     background-color: var(--primary-color);
-    color: #fff;
     border: none;
-    padding: 10px 20px;
     border-radius: 4px;
+    color: #fff;
     cursor: pointer;
+    padding: 10px 20px;
     transition: background-color 0.3s ease;
 }
 
@@ -212,7 +199,7 @@ input:focus {
 
 .error-text {
     color: red;
-    margin-top: 10px;
-    visibility: hidden; /* Show only when there's an error */
     font-size: 0.9em;
+    margin-top: 10px;
+    visibility: hidden;
 }
