@@ -5,13 +5,21 @@
     <link href="static/styles.css" rel="stylesheet">
 </head>
 <body>
-    <form action="/register" method="post" id="register-form">
-        <input type="text" name="username" placeholder="Username">
-        <input type="password" name="password" placeholder="Password">
-        <button type="submit">Register</button>
-    </form>
+    <div class="centered-container">
+        <div class="centered-elements">
+            <div class="asthetic-container">
+                <h1>Vibes Button :)</h1>
+                <h2>Register</h2>
+                <form action="/register" method="post" id="register-form" class="vertical-form">
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <button type="submit" class="btn">Register</button>
+                </form>
 
-    <p>Already have an account? <a href="/login">Login here</a></p>
-    <p class="error-text">{{error}}</p>
+                <p>Already have an account? <a href="/login">Login here</a></p>
+                <p style="color: red;">{{error}}</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

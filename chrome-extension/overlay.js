@@ -32,17 +32,8 @@ fetch(chrome.runtime.getURL('overlay.html'))
         const div = document.createElement('div');
         div.innerHTML = data;
         document.body.appendChild(div);
-
-        const collapseButton = document.getElementById('collapse-button');
-        const expandButton = document.getElementById('expand-button');
-        const popupContent = document.getElementById('button-container');
         const activationButton = document.getElementById('activation-button');
         const textBox = document.getElementById('text-box');
-
-        // Event listener for the hover button
-        document.getElementById('hover-button').addEventListener("click", () => {
-            console.log("Hover button clicked!");
-        });
 
         // Function to reveal text character by character
         function revealText(text, object) {
@@ -59,16 +50,6 @@ fetch(chrome.runtime.getURL('overlay.html'))
 
         // Event listeners for various buttons
         textBox.addEventListener('click', () => textBox.innerText = '');
-        collapseButton.addEventListener('click', () => {
-            popupContent.style.display = 'none';
-            textBox.style.display = 'none';
-            expandButton.style.display = 'block';
-        });
-        expandButton.addEventListener('click', () => {
-            popupContent.style.display = 'block';
-            textBox.style.display = 'inline-block';
-            expandButton.style.display = 'none';
-        });
 
         // Event listener for the activation button
         activationButton.addEventListener('click', () => {
