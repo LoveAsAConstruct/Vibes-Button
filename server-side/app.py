@@ -17,20 +17,25 @@ def get_user_info(user_id):
 
 @app.route('/')
 def home():
-    # Check if user is logged in (you can use session or other methods based on your setup)
+    # Check if 'user_id' is in session and is not None or -1
     if 'user_id' in session and session['user_id'] is not None and session['user_id'] != -1:
-        # User is logged in, render the main content page with user details
-        user = get_user_info(session['user_id']) 
-        entries = db.execute("SELECT * FROM apicalls WHERE user_id = :user_id", user_id=user["id"])
-        entries.reverse();
-        total_tokens = sum(entry['tokens'] for entry in entries)
-        total_requests = len(entries)
+        # Get user information
+        user = get_user_info(session['user_id'])
+        
+        # Check if user information is not None
+        if user is not None:
+            # Retrieve entries from the database
+            entries = db.execute("SELECT * FROM apicalls WHERE user_id = :user_id", user_id=user["id"])
+            
+            # Check if entries is not None
+            if entries is not None:
+                entries.reverse()
+                total_tokens = sum(entry['tokens'] for entry in entries)
+                total_requests = len(entries)
+                return render_template('index.html', username=user["username"], entries=entries, total_tokens=total_tokens, total_requests=total_requests)
 
-        return render_template('index.html', username=user["username"], entries=entries, total_tokens=total_tokens, total_requests=total_requests)
-
-    else:
-        # User is not logged in, render the login page
-        return render_template('login.html')
+    # Render the login page if user is not logged in or if any of the checks fail
+    return render_template('login.html')
     
 @app.route('/options')
 def options():
