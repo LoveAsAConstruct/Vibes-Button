@@ -36,9 +36,10 @@ If Python is not installed, or if you need to upgrade to Python 3.11, you can do
 
 ## Downloading the Repository
 To begin setup, download the repository using one of the following methods:
-
+```bash
 gh repo clone LoveAsAConstruct/Vibes-Button
-Manually downloading the most recent main branch from GitHub
+```
+or by manually downloading the most recent main branch from GitHub: https://github.com/LoveAsAConstruct/Vibes-Button
 
 
 ### Directory Structure
@@ -173,7 +174,7 @@ After registering, you'll be redirected to the homepage, which displays a welcom
 
 ### Obtaining the API Key
 
-You will need an OpenAI API key connected to an account with funds. OpenAI scans GitHub for exposed keys, but a Google Drive link will be provided for a key with $5 in compute credits.
+You will need an OpenAI API key connected to an account with funds. OpenAI scans GitHub for exposed keys, but a Google Drive link will be provided for a key with $5 in compute credits. This key can be found here: https://docs.google.com/document/d/1xw2aQxEXkImmbOJaUXQJEvkvBcpeyFIeQ1V7M0RUCV4/edit?usp=sharing
 
 ### Entering the API Key
 
