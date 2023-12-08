@@ -20,6 +20,9 @@ Houses the resources for the Chrome extension.
 
 ## Setup Instructions
 
+### Youtube Tutorial
+You can find a brief video showcasing the extensions installation at: https://youtu.be/1nJ2gvhv4Ag
+(my apologies for not including my face, as a minor, youtube had a restricted policy that I didn't want to invoke)
 ### Checking Python Installation
 
 Before beginning the setup, ensure that Python is installed on your system. You can check this by running the following command in your terminal:

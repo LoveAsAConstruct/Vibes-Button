@@ -23,3 +23,5 @@ The functionality of the orange button is quite sophisticated; upon clicking, it
 ## API Logging for Model Improvement
 
 A key feature of this project is its API logging functionality. The primary goal here is to gather a rich dataset to train a larger, more accurate model in the future. The current model's significant shortcoming is in its response formatting—errors that I plan to address by enriching the training set with a wider array of prompts. The idea is to reinforce the double bracket response format, enhancing the model's ability to generate more precise and contextually relevant responses. This improvement is crucial for increasing the overall reliability and utility of the application.
+
+# If you have time, check out "/This was CS50.txt"
